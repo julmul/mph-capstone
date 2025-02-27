@@ -1,19 +1,20 @@
 .PHONY: clean
 
-# Remove processed data and figures
 clean:
-	rm data/processed/*
 	rm figures/*
-	rm report.html
+	rm reports/report.pdf
 
 # Run entire analysis
-all: report.pdf
+all: reports/report.pdf
 
-# Format variables according to codebook
+# Format variables according to codebook (only if raw data is available)
 data/no_insurance_filtered.csv:\
- data/nhis_00006.csv.gz\
  analysis/recode_variables.R
-	Rscript analysis/recode_variables.R
+	if [ -f data/nhis_00006.csv.gz ]; then \
+		Rscript analysis/recode_variables.R; \
+	else \
+		@echo 'Raw NHIS data (nhis_00006.csv.gz) not found. Skipping data processing.'; \
+	fi
 	@echo 'Filtering on inclusion criteria and recoding appropriately'
 	@echo ''
 
@@ -50,12 +51,12 @@ figures/duration_no_insurance.png:\
 	@echo ''
 	
 # Build final report
-report.pdf: report.Rmd\
+reports/report.pdf: reports/report.Rmd\
  figures/table_1.rds\
  figures/table_2.rds\
  figures/reason_no_insurance.png\
  figures/duration_no_insurance.png
-	Rscript -e "rmarkdown::render('report.Rmd', output_format = 'pdf_document', quiet = TRUE)"
+	Rscript -e "rmarkdown::render('reports/report.Rmd', output_format = 'pdf_document', quiet = TRUE)"
 	@echo 'Building final report of analyses'
 	@echo ''
 
