@@ -11,6 +11,19 @@ suppressPackageStartupMessages(library(tidyverse))
 # Import data
 data <- read_csv('data/no_insurance_filtered.csv', show_col_types = F)
 
+# Factor duration variable
+data <- data %>%
+  # mutate(
+  #   HILAST.f = factor(HILAST.f, levels = c(
+  #     '<1 year', '1 to <2 years', '2 to <3 years', '3 to <5 years', '5 to <10 years',
+  #     '10+ years', 'Never', 'Unknown'))
+  # )
+  mutate(
+    HILAST.f = factor(HILAST.f, levels = c(
+      '<1 year', '1 to <3 years', '3 to <5 years', '5 to <10 years',
+      '10+ years', 'Never', 'Unknown'))
+  )
+
 # Plot duration of no insurance
 plt <- ggplot(data = data) +
   geom_bar(aes(x = HILAST.f), stat = 'count', fill = 'black') +

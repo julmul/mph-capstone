@@ -14,7 +14,7 @@ data <- read_csv('data/nhis_00006.csv.gz', show_col_types = F)
 # Filter based on study inclusion criteria
 data <- data %>%
   filter(
-    HILAST != 0, 
+    HILAST != 0 & !(HILAST %in% 97:99), 
     AGE < 65 & AGE > 17
   )
 
@@ -55,8 +55,8 @@ data <- data %>%
       EDUC %in% 996:999 ~ 'Unknown'
     ),
     CITIZEN.f = case_when(
-      CITIZEN == 1 ~ 'No',
-      CITIZEN == 2 ~ 'Yes',
+      CITIZEN == 1 ~ 'Non-Citizen',
+      CITIZEN == 2 ~ 'Citizen',
       CITIZEN %in% 7:9 ~ 'Unknown'
     ),
     URBRRL.f = case_when(
@@ -71,15 +71,14 @@ data <- data %>%
 data <- data %>%
   mutate(
     HILAST.f = case_when(
-      HILAST == 00 ~ 'NIU',
       HILAST == 14 ~ '<1 year',
-      HILAST == 23 ~ '1 to <2 years',
-      HILAST == 24 ~ '2 to <3 years',
+      # HILAST == 23 ~ '1 to <2 years',
+      # HILAST == 24 ~ '2 to <3 years',
+      HILAST %in% 23:24 ~ '1 to <3 years',
       HILAST == 33 ~ '3 to <5 years',
       HILAST == 34 ~ '5 to <10 years',
       HILAST == 35 ~ '10+ years',
       HILAST == 40 ~ 'Never',
-      HILAST %in% 97:99 ~ 'Unknown'
     )
   )
 

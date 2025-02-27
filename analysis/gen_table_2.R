@@ -22,7 +22,11 @@ data <- data %>%
       HINOUNEMPR.f, HINOCOSTR.f, HINOWANT.f, HINOCONF.f, 
       HINOMEET.f, HINOWAIT.f, HINOMISS.f, HINOELIG.f),
       ~ factor(., levels = c('Yes', 'No', 'Unknown')))
-    )
+    ) %>%
+  # mutate(HILAST.f = factor(HILAST.f, levels = c(
+  #   '<1 year', '1 to <2 years', '2 to <3 years', '3 to <5 years', '5 to <10 years', '10+ years', 'Never')))
+  mutate(HILAST.f = factor(HILAST.f, levels = c(
+  '<1 year', '1 to <3 years', '3 to <5 years', '5 to <10 years', '10+ years', 'Never')))
 
 # Label reasons for no insurance variables
 label(data$HINOUNEMPR.f) <- 'Unemployment'

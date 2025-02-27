@@ -18,8 +18,12 @@ data <- read_csv('data/no_insurance_filtered.csv', show_col_types = F)
 # Factor variables in the order they should appear in the table
 data <- data %>% 
   mutate(
+    # HILAST.f = factor(HILAST.f, levels = c(
+    #   '<1 year', '1 to <2 years', '2 to <3 years', '3 to <5 years', 
+    #   '5 to <10 years', '10+ years', 'Never', 'Unknown')
+    # ),
     HILAST.f = factor(HILAST.f, levels = c(
-      '<1 year', '1 to <2 years', '2 to <3 years', '3 to <5 years', 
+      '<1 year', '1 to <3 years', '3 to <5 years',
       '5 to <10 years', '10+ years', 'Never', 'Unknown')
     ),
     RACETH.f = factor(RACETH.f, levels = c(
@@ -31,6 +35,9 @@ data <- data %>%
     EDUC.f = factor(EDUC.f, levels = c(
       'Grade 11 or less', 'High school diploma or GED', 'Some college',
       'Associate\'s degree', 'Bachelor\'s degree', 'Postgraduate degree', 'Unknown')
+    ),
+    CITIZEN.f = factor(CITIZEN.f, levels = c(
+      'Yes', 'No', 'Unknown')
     )
   )
 
