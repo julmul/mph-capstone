@@ -19,7 +19,7 @@ data/no_insurance_filtered.csv:\
 	@echo ''
 
 # Generate table 1
-figures/table_1.rds:\
+figures/table_1.png:\
  data/no_insurance_filtered.csv\
  analysis/gen_table_1.R
 	Rscript analysis/gen_table_1.R
@@ -27,7 +27,7 @@ figures/table_1.rds:\
 	@echo ''
 	
 # Generate table 2
-figures/table_2.rds:\
+figures/table_2.png:\
  data/no_insurance_filtered.csv\
  analysis/gen_table_2.R
 	Rscript analysis/gen_table_2.R

@@ -9,6 +9,7 @@
 suppressPackageStartupMessages({
   library(tidyverse)
   library(table1)
+  library(flextable)
 })
 
 # Import data
@@ -39,11 +40,13 @@ label(data$SEX.f) <- 'Sex'
 label(data$RACETH.f) <- 'Self-Reported Race/Ethnicity'
 label(data$URBRRL.f) <- 'Urban Classification'
 label(data$EDUC.f) <- 'Educational Attainment'
+label(data$CITIZEN.f) <- 'Citizenship Status'
 
 # Generate table 1
-table <- table1(~ AGE + SEX.f + RACETH.f + URBRRL.f + EDUC.f | HILAST.f,
+table <- table1(~ AGE + SEX.f + RACETH.f + URBRRL.f + EDUC.f + CITIZEN.f | HILAST.f,
                 data = data,
                 overall = c(left = 'Overall'))
 
-# Export as RDS
-write_rds(table, 'figures/table_1.rds')
+# Convert to flextable for output
+ft <- t1flex(table)
+suppressMessages(save_as_image(ft, 'figures/table_1.png'))

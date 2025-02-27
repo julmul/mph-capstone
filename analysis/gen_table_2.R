@@ -9,6 +9,7 @@
 suppressPackageStartupMessages({
   library(tidyverse)
   library(table1)
+  library(flextable)
 })
 
 # Import data
@@ -39,5 +40,6 @@ table <- table1(~ HINOUNEMPR.f + HINOCOSTR.f + HINOWANT.f + HINOCONF.f +
                 data = data,
                 overall = c(left = 'Overall'))
 
-# Export as RDS
-write_rds(table, 'figures/table_2.rds')
+# Convert to flextable for output
+ft <- t1flex(table)
+suppressMessages(save_as_image(ft, 'figures/table_2.png'))
