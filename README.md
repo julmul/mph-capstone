@@ -22,7 +22,7 @@ The analysis is stratified by demographic factors to identify disparities and in
 
 ```
 git clone https://github.com/julmul/MPH-capstone.git
-cd capstone-project
+cd MPH-capstone
 ```
 
 2. Run the full analysis in a terminal using the Makefile:
