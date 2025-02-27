@@ -49,14 +49,23 @@ figures/duration_no_insurance.png:\
 	Rscript analysis/plot_uninsured_duration.R
 	@echo 'Generating histogram of duration without insurance'
 	@echo ''
-	
-# Build final report
-reports/report.pdf: reports/report.Rmd\
- figures/table_1.rds\
- figures/table_2.rds\
- figures/reason_no_insurance.png\
- figures/duration_no_insurance.png
-	Rscript -e "rmarkdown::render('reports/report.Rmd', output_format = 'pdf_document', quiet = TRUE)"
-	@echo 'Building final report of analyses'
+
+# Generate line graph of frequency of duration of no insurance by reason
+figures/duration_no_insurance_by_reason.png:\
+ data/no_insurance_filtered.csv\
+ analysis/plot_uninsured_duration_by_reason.R
+	Rscript analysis/plot_uninsured_duration_by_reason.R
+	@echo 'Generating line graph of duration without insurance by reason'
 	@echo ''
 
+# Compile PDF
+reports/report.pdf: reports/report.tex\
+ figures/table_1.png\
+ figures/table_2.png\
+ figures/reason_no_insurance.png\
+ figures/duration_no_insurance.png\
+ figures/duration_no_insurance_by_reason.png
+	pdflatex -output-directory=reports reports/report.tex > /dev/null 2>&1
+	rm reports/report.aux reports/report.log reports/report.out reports/report.toc
+	@echo 'Building final report of analyses'
+	@echo ''
