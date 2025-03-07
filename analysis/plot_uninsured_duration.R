@@ -13,11 +13,6 @@ data <- read_csv('data/no_insurance_filtered.csv', show_col_types = F)
 
 # Factor duration variable
 data <- data %>%
-  # mutate(
-  #   HILAST.f = factor(HILAST.f, levels = c(
-  #     '<1 year', '1 to <2 years', '2 to <3 years', '3 to <5 years', '5 to <10 years',
-  #     '10+ years', 'Never', 'Unknown'))
-  # )
   mutate(
     HILAST.f = factor(HILAST.f, levels = c(
       '<1 year', '1 to <3 years', '3 to <5 years', '5 to <10 years',
@@ -30,7 +25,7 @@ plt <- ggplot(data = data) +
   theme_minimal(base_size = 14) +
   theme(legend.position = 'none',
         axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1)) +
-  labs(x = 'Duration Without Insurance', y = 'Count (N)') +
+  labs(x = 'Duration without Insurance', y = 'Count (N)') +
   scale_y_continuous(breaks = seq(0, 700, by = 100))
 
 # Export as PNG

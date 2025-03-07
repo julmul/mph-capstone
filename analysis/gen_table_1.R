@@ -15,30 +15,23 @@ suppressPackageStartupMessages({
 # Import data
 data <- read_csv('data/no_insurance_filtered.csv', show_col_types = F)
 
+# Source functions
+source('analysis/utils.R')
+
 # Factor variables in the order they should appear in the table
-data <- data %>% 
+data <- data %>%
+  mutate(RACETH.f = if_else(is.na(RACETH.f), 'Unknown', RACETH.f)) %>%
+  factor_hilast() %>%
   mutate(
-    # HILAST.f = factor(HILAST.f, levels = c(
-    #   '<1 year', '1 to <2 years', '2 to <3 years', '3 to <5 years', 
-    #   '5 to <10 years', '10+ years', 'Never', 'Unknown')
-    # ),
-    HILAST.f = factor(HILAST.f, levels = c(
-      '<1 year', '1 to <3 years', '3 to <5 years',
-      '5 to <10 years', '10+ years', 'Never', 'Unknown')
-    ),
     RACETH.f = factor(RACETH.f, levels = c(
-      'White/non-Hispanic', 'White/Hispanic', 'Black', 'Other', 'Unknown')
-    ),
+      'White/non-Hispanic', 'White/Hispanic', 'Black', 'Other', 'Unknown')),
     URBRRL.f = factor(URBRRL.f, levels = c(
-      'Large central metro', 'Large fringe metro', 'Small/medium metro', 'Nonmetropolitan')
-    ),
+      'Large central metro', 'Large fringe metro', 'Small/medium metro', 'Nonmetropolitan')),
     EDUC.f = factor(EDUC.f, levels = c(
       'Grade 11 or less', 'High school diploma or GED', 'Some college',
-      'Associate\'s degree', 'Bachelor\'s degree', 'Postgraduate degree', 'Unknown')
-    ),
+      'Associate\'s degree', 'Bachelor\'s degree', 'Postgraduate degree', 'Unknown')),
     CITIZEN.f = factor(CITIZEN.f, levels = c(
-      'Yes', 'No', 'Unknown')
-    )
+      'Citizen', 'Non-Citizen', 'Unknown'))
   )
 
 # Label variable names

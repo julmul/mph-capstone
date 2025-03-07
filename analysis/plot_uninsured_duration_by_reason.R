@@ -1,8 +1,8 @@
 ################################################
-# Generate line graph of duration without insurance by reason
+# Generate line graphs of duration without insurance by reason
 # Author: Julia Muller
-# Date: 27 February 2024
-# Last modified: February 2024
+# Date: 27 February 2025
+# Last modified: March 2025
 ################################################
 
 # Load libraries
@@ -11,43 +11,64 @@ suppressPackageStartupMessages(library(tidyverse))
 # Import data
 data <- read_csv('data/no_insurance_filtered.csv', show_col_types = F)
 
-# Calculate frequencies of reasons for no insurance by duration, then pivot longer
-data_sum <- data %>%
-  group_by(HILAST.f) %>%
-  summarize(
-    HINOUNEMPR.f = sum(HINOUNEMPR.f == 'Yes')/n(),
-    HINOCOSTR.f = sum(HINOCOSTR.f == 'Yes')/n(),
-    HINOTHER.f = sum(HINOTHER.f == 'Yes')/n(),
-    HINOWANT.f = sum(HINOWANT.f == 'Yes')/n(),
-    HINOCONF.f = sum(HINOCONF.f == 'Yes')/n(),
-    HINOMEET.f = sum(HINOMEET.f == 'Yes')/n(),
-    HINOWAIT.f = sum(HINOWAIT.f == 'Yes')/n(),
-    HINOMISS.f = sum(HINOMISS.f == 'Yes')/n(),
-    HINOELIG.f = sum(HINOELIG.f == 'Yes')/n()) %>%
-  pivot_longer(
-    cols = c('HINOUNEMPR.f', 'HINOCOSTR.f', 'HINOCONF.f', 'HINOWANT.f', 'HINOWANT.f', 'HINOTHER.f', 'HINOMEET.f', 'HINOWAIT.f', 'HINOMISS.f', 'HINOELIG.f'),
-    names_to = 'reason',
-    values_to = 'value') %>%
-  ungroup()
+# Source functions
+source('analysis/utils.R')
 
-# Factor duration without insurance for correct ordering
-data_sum <- data_sum %>%
-  # mutate(HILAST.f = factor(HILAST.f, levels = c(
-  #   '<1 year', '1 to <2 years', '2 to <3 years', '3 to <5 years', '5 to <10 years', '10+ years', 'Never')))
-  mutate(HILAST.f = factor(HILAST.f, levels = c(
-    '<1 year', '1 to <3 years', '3 to <5 years', '5 to <10 years', '10+ years', 'Never')))
+# Calculate frequencies of reasons for no insurance by duration (and another stratifying 
+# variable if desired), then pivot longer
+calculate_proportions <- function(data, strat_var = NULL) {
+  if (!is.null(strat_var)) {
+    data <- data %>% filter(.data[[strat_var]] != 'Unknown')
+  }
   
-# Generate line graph of duration without insurance by reason
-plt <- ggplot(data = data_sum) +
-  geom_line(aes(x = HILAST.f, y = value*100, group = reason, color = reason), linewidth = 1) +
-  theme_minimal(base_size = 18) +
-  labs(x = 'Duration without Insurance', y = 'Frequency (%)') +
-  scale_color_manual(
-    name = NULL,
-    labels = c('Too difficult/confusing', 'Too expensive', 'Not eligible', 'Does not meet needs', 'Missed deadline to sign up', 'Other', 'Unemployment', 'Coverage has not started yet', 'Does not want/need coverage'), 
-    values = c('#E69F00', '#D55E00', '#56B4E9', '#0072B2', '#009E73', '#F0E442', '#CC79A7', '#000000', 'grey50')) +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
-  guides(colour = guide_legend(override.aes = list(linewidth = 2.5)))
+  data %>%
+    group_by(HILAST.f, !!!rlang::syms(strat_var)) %>%
+    summarize(
+      across(
+        c(HINOUNEMPR.f, HINOCOSTR.f, HINOCONF.f, HINOWANT.f, 
+          HINOTHER.f, HINOMEET.f, HINOWAIT.f, HINOMISS.f, HINOELIG.f),
+        ~ sum(. == 'Yes', na.rm = T) / n(),
+        .names = "{.col}")) %>%
+    pivot_longer(
+      cols = c(HINOUNEMPR.f, HINOCOSTR.f, HINOCONF.f, HINOWANT.f, 
+               HINOTHER.f, HINOMEET.f, HINOWAIT.f, HINOMISS.f, HINOELIG.f),
+      names_to = 'reason',
+      values_to = 'value') %>%
+    ungroup()
+}
 
-# Export as PNG
+# Generate line graph of duration without insurance by reason
+plot_reasons_by_dur <- function(data) {
+  ggplot(data = data) +
+    geom_line(aes(x = HILAST.f, y = value*100, group = reason, color = reason), linewidth = 1) +
+    theme_minimal(base_size = 20) +
+    labs(x = 'Duration without Insurance', y = 'Frequency (%)') +
+    scale_color_manual(
+      name = 'Reasons for No Insurance',
+      labels = c('Too difficult/confusing', 'Too expensive', 'Not eligible', 'Does not meet needs', 'Missed deadline to sign up', 'Other', 'Unemployment', 'Coverage has not started yet', 'Does not want/need coverage'), 
+      values = c('#E69F00', '#D55E00', '#56B4E9', '#0072B2', '#009E73', '#F0E442', '#CC79A7', '#000000', 'grey50')) +
+    theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+    guides(colour = guide_legend(override.aes = list(linewidth = 2.5)))
+}
+
+# Overall graph
+data_sum <- calculate_proportions(data)
+data_sum <- factor_hilast(data_sum)
+plt <- plot_reasons_by_dur(data_sum)
+
+# Graph by citizenship status
+data_citizen <- calculate_proportions(data, 'CITIZEN.f')
+citizen_plt <- plot_reasons_by_dur(data_citizen) +
+  facet_wrap(~CITIZEN.f)
+
+# Facet wrap by race
+data_race <- calculate_proportions(data, 'RACETH.f') %>% 
+  mutate(RACETH.f = factor(RACETH.f, levels = c('White/non-Hispanic', 'White/Hispanic', 'Black', 'Other')))
+race_plt <- plot_reasons_by_dur(data_race) +
+  facet_wrap(~RACETH.f)
+
+# Export as PNGs
 ggsave('figures/duration_no_insurance_by_reason.png', plt, height = 6, width = 12, dpi = 600)
+ggsave('figures/duration_no_insurance_by_reason_by_citizen.png', citizen_plt, height = 6, width = 18, dpi = 600)
+ggsave('figures/duration_no_insurance_by_reason_by_race.png', race_plt, height = 12, width = 18, dpi = 600)
+

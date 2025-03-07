@@ -34,8 +34,8 @@ data <- data %>%
     ),
     HISPETH.f = case_when(
       HISPETH == 10 ~ 'No',
+      HISPETH %in% c(20, 60) ~ 'Yes',
       HISPETH %in% 90:99 ~ 'Unknown',
-      TRUE ~ 'Yes'
     ),
     RACETH.f = case_when(
       RACENEW.f == 'White' & HISPETH.f == 'No' ~ 'White/non-Hispanic',
@@ -72,8 +72,6 @@ data <- data %>%
   mutate(
     HILAST.f = case_when(
       HILAST == 14 ~ '<1 year',
-      # HILAST == 23 ~ '1 to <2 years',
-      # HILAST == 24 ~ '2 to <3 years',
       HILAST %in% 23:24 ~ '1 to <3 years',
       HILAST == 33 ~ '3 to <5 years',
       HILAST == 34 ~ '5 to <10 years',

@@ -15,18 +15,13 @@ suppressPackageStartupMessages({
 # Import data
 data <- read_csv('data/no_insurance_filtered.csv', show_col_types = F)
 
+# Source functions
+source('analysis/utils.R')
+
 # Filter out unknowns and factor yes/no responses in desired order
 data <- data %>%
-  mutate(
-    across(c(
-      HINOUNEMPR.f, HINOCOSTR.f, HINOWANT.f, HINOCONF.f, 
-      HINOMEET.f, HINOWAIT.f, HINOMISS.f, HINOELIG.f),
-      ~ factor(., levels = c('Yes', 'No', 'Unknown')))
-    ) %>%
-  # mutate(HILAST.f = factor(HILAST.f, levels = c(
-  #   '<1 year', '1 to <2 years', '2 to <3 years', '3 to <5 years', '5 to <10 years', '10+ years', 'Never')))
-  mutate(HILAST.f = factor(HILAST.f, levels = c(
-  '<1 year', '1 to <3 years', '3 to <5 years', '5 to <10 years', '10+ years', 'Never')))
+  factor_reasons() %>%
+  factor_hilast()
 
 # Label reasons for no insurance variables
 label(data$HINOUNEMPR.f) <- 'Unemployment'
@@ -42,7 +37,9 @@ label(data$HINOELIG.f) <- 'Not eligible'
 table <- table1(~ HINOUNEMPR.f + HINOCOSTR.f + HINOWANT.f + HINOCONF.f +
                   HINOMEET.f + HINOWAIT.f + HINOMISS.f + HINOELIG.f | HILAST.f,
                 data = data,
-                overall = c(left = 'Overall'))
+                overall = c(left = 'Overall'),
+                render.categorical = 'Freq (PCTnoNA%)',
+                render.missing = 'Freq')
 
 # Convert to flextable for output
 ft <- t1flex(table)
