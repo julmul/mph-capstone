@@ -2,6 +2,8 @@
 %% BASIC SETUP %%
 %%%%%%%%%%%%%%%%%
 \documentclass[12pt]{article}
+\usepackage[style=apa]{biblatex}
+\addbibresource{references.bib}
 
 % Necessary packages
 \usepackage{titling}
@@ -15,6 +17,7 @@
 \usepackage{setspace}
 \usepackage{lscape}
 \usepackage[tableposition=top]{caption}
+\usepackage{indentfirst}
 
 % Title page margins
 \newgeometry{top=2in, bottom=1in, left=1.5in, right=1.5in}
@@ -47,13 +50,8 @@
   position=top,
 }
 
-% Footnote formatting
-%\newcommand{\smallerfootnotes}{\footnotesize}
-
-% Spacing
+% Adjust spacing
 \setlength{\parskip}{1.5em}
-
-% Adjust spacing for section and subsection headings
 \titlespacing*{\section}{0pt}{*0}{*0}
 \titlespacing*{\subsection}{0pt}{*0}{*0}
 \titlespacing*{\subsubsection}{0pt}{*0}{*0}
@@ -96,13 +94,11 @@
 \newpage
 \section{Introduction}
 
-Among industrialized nations, the United States spends twice as much on healthcare as the median nation while having one of the worst qualities of healthcare (Davis, 2007). The US is one of the only industrialized nations without universal health insurance. People who do not have insurance face increased financial burden, barriers in access to care, lost economic productivity, and worse patient outcomes (Davis, 2007). Studies have found that people who have insurance have more statistically significant positive health outcomes in general health, general physical functioning, mortality, health disease, cancer, diabetes, and acute conditions (McWilliams, 2009). In terms of financial burden, 49\% of uninsured adults report difficulty paying medical bills, compared to only 21\% of individuals with private insurance, and a higher percentage of uninsured adults report having medical debt (Tolbert, 2024). Uninsured status also restricts access to preventative care and health care services – people without insurance are more likely to delay or forgo medical care because of costs (Cha \& Cohen, 2020). Not having insurance can also have downstream effects on a person’s ability to access specialized healthcare resources. For example, participants who were disenrolled in a Washington State AIDS Drug Assistance Program between 2017 and 2019 were more likely to be uninsured compared to those with private insurance, despite insurance not being a requirement for the program (Erly et al., 2022). For these reasons, addressing remaining insurance gaps is critical to ensure equitable access to health care and positive health outcomes. Despite the expansion of the Affordable Care Act, many people remain uninsured (Tolbert et al., 2024). Understanding the reasons why people remain uninsured, and the impact of those reasons on the length of time they go without insurance, could identify potential avenues for interventions to close the uninsurance gap.
+  Although the United States spends twice as much per capita on healthcare as the median industrialized nation, millions of Americans still lack insurance (Turner citation). People who do not have health insurance face increased financial strain, barriers in access to healthcare, and worse overall health outcomes (\cite{davis_uninsured_2007}). 49\% of uninsured adults report difficulty paying medical bills, compared to only 21\% of adults with private insurance (\cite{tolbert_key_2024}). Furthermore, uninsured adults are more likely to delay or forgo medical care due to cost, and face challenges accessing both preventive and specialized healthcare services (\cite{cha_reasons_2020, erly_characterization_2022}). Addressing remaining insurance gaps is critical to ensure equitable access to health care and positive health outcomes. Understanding the reasons why people remain uninsured—as well as the impact of those reasons on the length of time they go without insurance—could identify potential avenues for interventions to close the insurance gap.
 
-As of 2023, an estimated 21.3 million individuals aged 18-64 were uninsured (Tolbert et al., 2024). The percentage of adults in the US aged 18-64 who were uninsured vary across different demographics, with a higher prevalence among racial and ethnic minorities (Lee et al. 2021). In 2018, uninsured working-age adults in the US were found to be disproportionately low income, Latino, and under the age of 25 (Collins \& Gunja, 2019). Additionally, the reasons for uninsurance differ by demographic factors. In 2023, 63\% of adults aged 18-64 claimed that the high cost of insurance as the main reason they are uninsured (Tolbert et al., 2024). High cost of care as the primary barrier increases with age from 66.8\% among those aged 18-29 to 80.9\% for those aged 50-64 (Cha \& Cohen, 2020). Hispanic adults were also more likely to be uninsured due to issues about eligibility (Cha \& Cohen, 2020). Men were more likely than women to not have insurance because it was not needed or wanted (Cha \& Cohen 2020). Those who were uninsured were more likely to be non-Hispanic black or Hispanic, have less than a high school education, and have an annual household income less than \$35,000 (Okoro et al., 2015). Investigating the different reasons among the varying demographics of those uninsured is paramount to finding adequate interventions that are suited to helping the specific demographic groups that need it.
+While the United States has attempted to expand health coverage through expansion of the Affordable Care Act, an estimated 21.3 million adults aged 18 to 64 remained uninsured as of 2023 (\cite{tolbert_key_2024}). Various demographic factors—such as age, race, Hispanic ethnicity, income, and education level—play a role in the likelihood of being uninsured and reported reason for being uninsured (\cite{lee_convergence_2021}). Uninsurance is more prevalent among individuals who are lower income, racial minorities, Hispanic ethnicity, non-citizens, and those between the ages of 18 and 30, with these factors often intersecting (\cite{gunja_who_2019, okoro_lack_2015, wisk_inequalities_2019}). Furthermore, the reasons for not having insurance also differ across these demographic groups. In 2023, 63\% of adults aged 18 to 64 cited the high cost of insurance as their primary reason for being uninsured (\cite{tolbert_key_2024}). However, the impact of cost varies by age group; only 66.8\% of those aged 18 to 29 reported high cost as their primary reason for uninsurance, compared to 80.9\% of those aged 50 to 64 (\cite{cha_reasons_2020}). Other demographic factors, such as race and ethnicity, also influence reasons for remaining uninsured; for example, Hispanic adults were significantly more likely to report ineligibility as their primary reason for not having insurance (\cite{cha_reasons_2020}). Addressing the problem of uninsurance requires an understanding of the various reasons behind it, as well as how these reasons differ across demographic groups. Previous research has identified some of these reasons, but little has been done to explore how they correlate with the duration of being uninsured, which is a critical factor for understanding the long-term effects of uninsurance.
 
-From our literature review, most studies about insurance included adults aged 18-64. Individuals under 18 can be included in their parents’ insurance, and additional federal support programs, such as the Children’s Health Insurance Program (CHIP), are available and adults over the age of 18 are more likely to be uninsured than children (Tolbert et al., 2024; U.S. Centers for Medicare \& Medicaid Services, n.d.-a). However, studies show that children in the US can also suffer from inconsistent or no insurance with 34\% of US children in 2019 suffering from this (Daw et al. 2023). Additionally, individuals ages 65 and older are also excluded from most studies because they are automatically eligible for Medicare, which offers a no-cost Part A insurance (U.S. Centers for Medicare and Medicaid Services, n.d.-b). Therefore, there should effectively be no uninsured adults over 65. However, there are still some papers that address this assumption, and document the gaps in insurance coverage for this older demographic (Mold et al., 2004). The contextual factors of studies are crucial to this topic, as insurance policy changes with time, location, and individual age. Several of the previous studies on this topic were done before the implementation of the Affordable Care Act (ACA) in 2010. In later studies, it is important to consider the time and location of the study, as states choose to expand Medicaid at different times. Some studies are stratified between different periods after the ACA, such as the implementation period between 2010-2013 and the expansion of Medicaid and Marketplaces between 2014-2016 (Wisk \& Sharma, 2019). Additionally, different insurance plans are available for different income levels and age groups.
-
-Further study of reasons for being uninsured is needed, as expansion of ACA and the COVID-19 pandemic both impacted insurance coverage availability in the United States. While the ACA led to gains in health insurance coverage, substantial gaps remain. Gains in Marketplace use and Medicaid coverage in the expansion period of 2014 to 2016 were found among young adults 19-30 years of age, but disparities remained among female, lower socioeconomic status, non-citizens, non-English speakers, and several racial/ethnic minority groups (Wisk \& Sharma, 2019). These racial and ethnic disparities in health insurance coverage were found to be exacerbated by the COVID-19 pandemic (Freelander et al., 2023). Additionally, we found very few papers that looked at geographic factors such as urban-rural location or region of the United States. While we found many studies examining insurance coverage, relatively few examined the specific reasons for being uninsured. Furthermore, we found no studies specifically linking the reasons for not having health insurance with the duration of uninsurance. The goal of this study is to explore the reasons for not having insurance among adults, ages 18-64, who are not insured. By stratifying by various demographic and geographic characteristics, our study will also examine whether these reasons change among different populations.
+Relatively few studies have examined the specific reasons for uninsurance, and no studies have linked these reasons with the duration of uninsurance. Understanding this relationship is essential because the longer an individual is uninsured, the greater the risk of negative health and financial outcomes. This study aims to explore the reasons for uninsurance among adults aged 18 to 64 in the U.S. using 2023 NHIS data. By stratifying the data by demographic characteristics, this study will provide a more nuanced understanding of the barriers to obtaining insurance and the impact of these barriers on the duration of uninsurance. Ultimately, this research will inform policy recommendations aimed at closing the remaining gaps in health insurance coverage.
 
 
 %%%%%%%%%%%%%
@@ -172,5 +168,12 @@ For this study, our sample is a large and comprehensive group analyzing people i
 \newpage
 \section{Discussion}
 
+
+%%%%%%%%%%%%%%%%
+%% REFERENCES %%
+%%%%%%%%%%%%%%%%
+\newpage
+
+\printbibliography
 
 \end{document}

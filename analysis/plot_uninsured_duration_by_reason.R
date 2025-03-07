@@ -39,7 +39,7 @@ data_sum <- data_sum %>%
   
 # Generate line graph of duration without insurance by reason
 plt <- ggplot(data = data_sum) +
-  geom_line(aes(x = HILAST.f, y = value, group = reason, color = reason), linewidth = 1) +
+  geom_line(aes(x = HILAST.f, y = value*100, group = reason, color = reason), linewidth = 1) +
   theme_minimal(base_size = 18) +
   labs(x = 'Duration without Insurance', y = 'Frequency (%)') +
   scale_color_manual(

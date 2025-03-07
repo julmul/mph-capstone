@@ -66,6 +66,9 @@ reports/report.pdf: reports/report.tex\
  figures/duration_no_insurance.png\
  figures/duration_no_insurance_by_reason.png
 	pdflatex -output-directory=reports reports/report.tex > /dev/null 2>&1
-	rm reports/report.aux reports/report.log reports/report.out reports/report.toc
+	biber reports/report > /dev/null 2>&1
+	pdflatex -output-directory=reports reports/report.tex > /dev/null 2>&1
+	pdflatex -output-directory=reports reports/report.tex > /dev/null 2>&1
+	rm reports/report.aux reports/report.log reports/report.out reports/report.toc reports/report.bbl reports/report.blg reports/report.bcf reports/report.run.xml
 	@echo 'Building final report of analyses'
 	@echo ''
