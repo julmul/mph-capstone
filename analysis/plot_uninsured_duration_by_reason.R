@@ -14,13 +14,19 @@ data <- read_csv('data/no_insurance_filtered.csv', show_col_types = F)
 # Source functions
 source('analysis/utils.R')
 
-# Calculate frequencies of reasons for no insurance by duration (and another stratifying 
-# variable if desired), then pivot longer
+
+#---------------#
+# Functions ----
+#---------------#
+# Calculate proportions of reasons for no insurance by duration/stratifying variable
 calculate_proportions <- function(data, strat_var = NULL) {
+  
+  # Filter out unknowns from the stratifying variable
   if (!is.null(strat_var)) {
     data <- data %>% filter(.data[[strat_var]] != 'Unknown')
   }
   
+  # Calculate proportions of reasons by duration and stratifying variable
   data %>%
     group_by(HILAST.f, !!!rlang::syms(strat_var)) %>%
     summarize(
@@ -29,6 +35,8 @@ calculate_proportions <- function(data, strat_var = NULL) {
           HINOTHER.f, HINOMEET.f, HINOWAIT.f, HINOMISS.f, HINOELIG.f),
         ~ sum(. == 'Yes', na.rm = T) / n(),
         .names = "{.col}")) %>%
+    
+    # Pivot longer for plotting
     pivot_longer(
       cols = c(HINOUNEMPR.f, HINOCOSTR.f, HINOCONF.f, HINOWANT.f, 
                HINOTHER.f, HINOMEET.f, HINOWAIT.f, HINOMISS.f, HINOELIG.f),
@@ -38,11 +46,11 @@ calculate_proportions <- function(data, strat_var = NULL) {
 }
 
 # Generate line graph of duration without insurance by reason
-plot_reasons_by_dur <- function(data) {
+plot_reasons_by_dur <- function(data, base_size = 20) {
   ggplot(data = data) +
     geom_line(aes(x = HILAST.f, y = value*100, group = reason, color = reason), linewidth = 1) +
     theme_minimal(base_size = 20) +
-    labs(x = 'Duration without Insurance', y = 'Frequency (%)') +
+    labs(x = 'Duration without Insurance', y = 'Answered Yes (%)') +
     scale_color_manual(
       name = 'Reasons for No Insurance',
       labels = c('Too difficult/confusing', 'Too expensive', 'Not eligible', 'Does not meet needs', 'Missed deadline to sign up', 'Other', 'Unemployment', 'Coverage has not started yet', 'Does not want/need coverage'), 
@@ -51,23 +59,55 @@ plot_reasons_by_dur <- function(data) {
     guides(colour = guide_legend(override.aes = list(linewidth = 2.5)))
 }
 
-# Overall graph
+
+#--------------------------#
+# Overall study sample ----
+#--------------------------#
+# Calculate proportions of reasons for no insurance by duration, no stratification
 data_sum <- calculate_proportions(data)
 data_sum <- factor_hilast(data_sum)
+
+# Generate plot
 plt <- plot_reasons_by_dur(data_sum)
 
-# Graph by citizenship status
+
+#-----------------------------#
+# Stratify by citizenship ----
+#-----------------------------#
+# Calculate proportions, stratified by citizenship status
 data_citizen <- calculate_proportions(data, 'CITIZEN.f')
+
+# Add in sample sizes
+data_citizen <- data_citizen %>%
+  mutate(CITIZEN.f = factor(CITIZEN.f, 
+                            levels = c('Citizen', 'Non-Citizen'), 
+                            labels = c('Citizen (n=1168)', 'Non-Citizen (n=528)')))
+
+# Generate plot, facet wrapped by citizenship status
 citizen_plt <- plot_reasons_by_dur(data_citizen) +
   facet_wrap(~CITIZEN.f)
 
-# Facet wrap by race
-data_race <- calculate_proportions(data, 'RACETH.f') %>% 
-  mutate(RACETH.f = factor(RACETH.f, levels = c('White/non-Hispanic', 'White/Hispanic', 'Black', 'Other')))
-race_plt <- plot_reasons_by_dur(data_race) +
+
+#--------------------------------#
+# Stratify by race/ethnicity ----
+#--------------------------------#
+# Calculate proportions, stratified by race/ethnicity
+data_race <- calculate_proportions(data, 'RACETH.f')
+
+# Add in sample sizes
+data_race <- data_race %>%
+  mutate(RACETH.f = factor(RACETH.f, 
+                           levels = c('White/non-Hispanic', 'White/Hispanic', 'Black', 'Other'),
+                           labels = c('White/non-Hispanic (n=745)', 'White/Hispanic (n=414)', 'Black (n=199)', 'Other (n=138)')))
+
+# Generate plot and facet wrap by race
+race_plt <- plot_reasons_by_dur(data_race, base_size = 24) +
   facet_wrap(~RACETH.f)
 
-# Export as PNGs
+
+#------------#
+# Export ----
+#------------#
 ggsave('figures/duration_no_insurance_by_reason.png', plt, height = 6, width = 12, dpi = 600)
 ggsave('figures/duration_no_insurance_by_reason_by_citizen.png', citizen_plt, height = 6, width = 18, dpi = 600)
 ggsave('figures/duration_no_insurance_by_reason_by_race.png', race_plt, height = 12, width = 18, dpi = 600)
