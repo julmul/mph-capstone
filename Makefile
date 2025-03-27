@@ -58,13 +58,30 @@ figures/duration_no_insurance_by_reason.png:\
 	@echo 'Generating line graph of duration without insurance by reason'
 	@echo ''
 
+# Perform multivariate logistic regression for uninsured duration
+data/logistic_regression_output.rds:\
+ data/no_insurance_filtered.csv\
+ analysis/fit_glm.R
+	Rscript analysis/fit_glm.R
+	@echo 'Running multivariate logistic regression'
+	@echo ''
+	
+# Generate forest plot of regression output
+figures/forestplot_uninsured_1_year.png:\
+ data/logistic_regression_output.rds\
+ analysis/gen_forestplot.R
+	Rscript analysis/gen_forestplot.R
+	@echo 'Generating forest plot of regression output'
+	@echo ''
+
 # Compile PDF
 reports/report.pdf: reports/report.tex\
  figures/table_1.png\
  figures/table_2.png\
  figures/reason_no_insurance.png\
  figures/duration_no_insurance.png\
- figures/duration_no_insurance_by_reason.png
+ figures/duration_no_insurance_by_reason.png\
+ figures/forestplot_uninsured_1_year.png
 	pdflatex -output-directory=reports reports/report.tex > /dev/null 2>&1
 	biber reports/report > /dev/null 2>&1
 	pdflatex -output-directory=reports reports/report.tex > /dev/null 2>&1
