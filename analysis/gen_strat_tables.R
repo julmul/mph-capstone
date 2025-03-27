@@ -1,8 +1,8 @@
 ################################################
 # Generate table 2 of reasons and duration for no insurance
 # Author: Julia Muller
-# Date: 13 February 2024
-# Last modified: February 2024
+# Date: 13 February 2025
+# Last modified: February 2025
 ################################################
 
 # Load libraries

@@ -64,6 +64,10 @@ data <- data %>%
       URBRRL == 2 ~ 'Large fringe metro',
       URBRRL == 3 ~ 'Small/medium metro',
       URBRRL == 4 ~ 'Nonmetropolitan'
+    ),
+    POVERTY.f = case_when(
+      POVERTY %in% 11:13 ~ 'Below poverty threshold',
+      POVERTY %in% 20:37 ~ 'Above poverty threshold'
     )
   )
 
