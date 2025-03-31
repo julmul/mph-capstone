@@ -38,7 +38,8 @@ data <- data %>%
 data <- data %>%
   mutate(
     RACETH.f = relevel(factor(RACETH.f), ref = 'White/non-Hispanic'),
-    EDUC.f = relevel(factor(EDUC.f), ref = 'High school diploma or GED')
+    EDUC.f = relevel(factor(EDUC.f), ref = 'High school diploma or GED'),
+    POVERTY.f = relevel(factor(POVERTY.f), ref = '≥400% FPL')
   )
 
 
@@ -94,8 +95,10 @@ model_output <- model_output %>%
     variable == 'AGE.fAged 55-64' ~ 'Aged 55-64',
     variable == 'RACETH.fOther' ~ 'Other race',
     variable == 'RACETH.fWhite/Hispanic' ~ 'White/Hispanic',
-    variable == 'RACETH.fBlack' ~ 'Black',
-    variable == 'POVERTY.fBelow poverty threshold' ~ 'Below poverty threshold',
+    variable == 'RACETH.fBlack' ~ 'Black/African American',
+    variable == 'POVERTY.f<100% FPL' ~ '<100% FPL',
+    variable == 'POVERTY.f100 to <200% FPL' ~ '100 to <200% FPL',
+    variable == 'POVERTY.f200 to <400% FPL' ~ '200 to <400% FPL',
     variable == 'EDUC.fBachelor\'s degree' ~ 'Bachelor\'s degree',
     variable == 'EDUC.fAssociate\'s degree' ~ 'Associate\'s degree',
     variable == 'EDUC.fGrade 11 or less' ~ 'No high school diploma',

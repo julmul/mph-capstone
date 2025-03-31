@@ -43,4 +43,4 @@ table <- table1(~ HINOUNEMPR.f + HINOCOSTR.f + HINOWANT.f + HINOCONF.f +
 
 # Convert to flextable for output
 ft <- t1flex(table)
-suppressMessages(save_as_image(ft, 'figures/table_2.png'))
+save_as_image(ft, 'figures/table_2.png')

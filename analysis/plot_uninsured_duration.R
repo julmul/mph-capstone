@@ -31,7 +31,8 @@ calculate_proportions <- function(data, strat_var = NULL) {
     group_by(HILAST.f, !!!rlang::syms(strat_var)) %>%
     summarize(n = n(), .groups = 'drop') %>%
     group_by(!!!rlang::syms(strat_var)) %>%
-    mutate(prop = n/sum(n), .groups = 'drop')
+    mutate(prop = n/sum(n)) %>%
+    ungroup()
 }
 
 # Generate histogram of duration without insurance
@@ -46,7 +47,7 @@ plot_duration <- function(data, base_size) {
     theme_minimal(base_size = base_size) +
     theme(legend.position = 'none',
           axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1)) +
-    labs(x = 'Duration without Insurance', y = 'Proportion')
+    labs(x = 'Duration Without Insurance', y = 'Proportion')
 }
 
 

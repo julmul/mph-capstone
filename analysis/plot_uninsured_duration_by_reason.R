@@ -50,7 +50,7 @@ plot_reasons_by_dur <- function(data, base_size = 20) {
   ggplot(data = data) +
     geom_line(aes(x = HILAST.f, y = value*100, group = reason, color = reason), linewidth = 1) +
     theme_minimal(base_size = 20) +
-    labs(x = 'Duration without Insurance', y = 'Answered Yes (%)') +
+    labs(x = 'Duration Without Insurance', y = 'Answered Yes (%)') +
     scale_color_manual(
       name = 'Reasons for No Insurance',
       labels = c('Too difficult/confusing', 'Too expensive', 'Not eligible', 'Does not meet needs', 'Missed deadline to sign up', 'Other', 'Unemployment', 'Coverage has not started yet', 'Does not want/need coverage'), 
@@ -105,10 +105,27 @@ race_plt <- plot_reasons_by_dur(data_race, base_size = 24) +
   facet_wrap(~RACETH.f)
 
 
+#---------------------#
+# Stratify by FPL ----
+#---------------------#
+# Calculate proportions, stratified by FPL
+data_fpl <- calculate_proportions(data, 'POVERTY.f')
+
+# Add in sample sizes
+data_fpl <- data_fpl %>%
+  mutate(POVERTY.f = factor(POVERTY.f,
+                           levels = c('<100% FPL', '100 to <200% FPL', '200 to <400% FPL', '≥400% FPL'),
+                           labels = c('<100% FPL (n=363)', '100 to <200% FPL (n=556)', '200 to <400% FPL (n=584)', '≥400% FPL (n=301)')))
+
+# Generate plot and facet wrap by race
+fpl_plt <- plot_reasons_by_dur(data_fpl, base_size = 24) +
+  facet_wrap(~POVERTY.f)
+
+
 #------------#
 # Export ----
 #------------#
 ggsave('figures/duration_no_insurance_by_reason.png', plt, height = 6, width = 12, dpi = 600)
 ggsave('figures/duration_no_insurance_by_reason_by_citizen.png', citizen_plt, height = 6, width = 18, dpi = 600)
 ggsave('figures/duration_no_insurance_by_reason_by_race.png', race_plt, height = 12, width = 18, dpi = 600)
-
+ggsave('figures/duration_no_insurance_by_reason_by_fpl.png', fpl_plt, height = 12, width = 18, dpi = 600)

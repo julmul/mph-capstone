@@ -1,8 +1,8 @@
 ################################################
 # Filter and recode data according to study protocol
 # Author: Julia Muller
-# Date: 21 January 2024
-# Last modified: February 2024
+# Date: 21 January 2025
+# Last modified: March 2025
 ################################################
 
 # Load libraries
@@ -66,8 +66,10 @@ data <- data %>%
       URBRRL == 4 ~ 'Nonmetropolitan'
     ),
     POVERTY.f = case_when(
-      POVERTY %in% 11:13 ~ 'Below poverty threshold',
-      POVERTY %in% 20:37 ~ 'Above poverty threshold'
+      POVERTY %in% 11:13 ~ '<100% FPL',
+      POVERTY %in% 21:24 ~ '100 to <200% FPL',
+      POVERTY %in% 31:34 ~ '200 to <400% FPL',
+      POVERTY %in% 35:37 ~ '≥400% FPL'
     )
   )
 

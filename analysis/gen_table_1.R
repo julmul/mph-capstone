@@ -31,7 +31,9 @@ data <- data %>%
       'Grade 11 or less', 'High school diploma or GED', 'Some college',
       'Associate\'s degree', 'Bachelor\'s degree', 'Postgraduate degree', 'Unknown')),
     CITIZEN.f = factor(CITIZEN.f, levels = c(
-      'Citizen', 'Non-Citizen', 'Unknown'))
+      'Citizen', 'Non-Citizen', 'Unknown')),
+    POVERTY.f = factor(POVERTY.f, levels = c(
+      '<100% FPL', '100 to <200% FPL', '200 to <400% FPL', '≥400% FPL'))
   )
 
 # Label variable names
@@ -40,11 +42,11 @@ label(data$SEX.f) <- 'Sex'
 label(data$RACETH.f) <- 'Self-Reported Race/Ethnicity'
 label(data$URBRRL.f) <- 'Urban Classification'
 label(data$EDUC.f) <- 'Educational Attainment'
-label(data$POVERTY.f) <- 'Household Poverty Classification'
+label(data$POVERTY.f) <- 'Household Federal Poverty Level'
 label(data$CITIZEN.f) <- 'Citizenship Status'
 
 # Generate table 1
-table <- table1(~ AGE + SEX.f + RACETH.f + URBRRL.f + EDUC.f + POVERTY.f + CITIZEN.f | HILAST.f,
+table <- table1(~ AGE + SEX.f + RACETH.f + CITIZEN.f + EDUC.f + POVERTY.f | HILAST.f,
                 data = data,
                 overall = c(left = 'Overall'))
 
