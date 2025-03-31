@@ -4,7 +4,7 @@ factor_reasons <- function(data) {
       across(c(
         HINOUNEMPR.f, HINOCOSTR.f, HINOWANT.f, HINOCONF.f, 
         HINOMEET.f, HINOWAIT.f, HINOMISS.f, HINOELIG.f),
-        ~ factor(., levels = c('Yes', 'No')))
+        ~ factor(., levels = c('Yes', 'No', 'Unknown')))
       )
 }
 

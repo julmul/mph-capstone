@@ -49,7 +49,7 @@ data <- data %>%
 # Run logistic regression with all reason variables as separate predictors
 model_1year <- glm(long_uninsured ~ HINOUNEMPR.f + HINOCOSTR.f + HINOTHER.f + 
                      HINOWANT.f + HINOCONF.f + HINOMEET.f + HINOWAIT.f + 
-                     HINOMISS.f + HINOELIG.f + AGE.f + RACETH.f + POVERTY.f + EDUC.f + CITIZEN.f,
+                     HINOMISS.f + HINOELIG.f + AGE + RACETH.f + POVERTY.f + EDUC.f + CITIZEN.f,
                    data = data, family = binomial)
 
 # Get data frame of odds ratios and 95% CIs from model output
@@ -106,6 +106,7 @@ model_output <- model_output %>%
     variable == 'EDUC.fPostgraduate degree' ~ 'Postgraduate degree',
     variable == 'EDUC.fSome college' ~ 'Some college',
     variable == 'CITIZEN.fNon-Citizen' ~ 'Non-US citizen',
+    variable == 'AGE' ~ 'Age'
   ))
 
 # Create new column indicating statistical significance

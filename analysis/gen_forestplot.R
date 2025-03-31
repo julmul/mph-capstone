@@ -23,7 +23,7 @@ plt <- ggplot(data, aes(x = odds_ratio, y = variable, color = category, shape = 
   geom_point(size = 3) +
   geom_errorbarh(aes(xmin = ci_lower, xmax = ci_upper), height = 0.2) +
   geom_vline(xintercept = 1, linetype = 'dashed', color = 'grey50') +
-  labs(x = 'Odds Ratio and 95% CI', y = NULL, color = 'Variables', shape = 'Statistical Significance') +
+  labs(x = 'Adjusted Odds Ratio and 95% CI', y = NULL, color = 'Covariates', shape = 'Statistical Significance') +
   scale_color_manual(values = c('Demographics' = '#0072B2',
                                 'Highest Level of Education' = '#009E73', 
                                 'Reason for Uninsurance' = '#D55E00',
