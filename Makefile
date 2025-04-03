@@ -3,6 +3,7 @@
 clean:
 	rm figures/*
 	rm reports/report.pdf
+	rm data/logistic_regression_output.rds
 
 # Run entire analysis
 all: reports/report.pdf
@@ -23,23 +24,7 @@ figures/table_1.png:\
  data/no_insurance_filtered.csv\
  analysis/gen_table_1.R
 	Rscript analysis/gen_table_1.R
-	@echo 'Generating table 1 of demographics'
-	@echo ''
-	
-# Generate table 2
-figures/table_2.png:\
- data/no_insurance_filtered.csv\
- analysis/gen_table_2.R
-	Rscript analysis/gen_table_2.R
-	@echo 'Generating table 2 of reasons for no insurance vs. duration without insurance'
-	@echo ''
-	
-# Generate histogram of reasons for no insurance
-figures/reason_no_insurance.png:\
- data/no_insurance_filtered.csv\
- analysis/plot_uninsured_reasons.R
-	Rscript analysis/plot_uninsured_reasons.R
-	@echo 'Generating histogram of reasons for no insurance'
+	@echo 'Generating table 1 of respondent demographics'
 	@echo ''
 	
 # Generate histogram of duration without insurance
@@ -77,8 +62,6 @@ figures/forestplot_uninsured_1_year.png:\
 # Compile PDF
 reports/report.pdf: reports/report.tex\
  figures/table_1.png\
- figures/table_2.png\
- figures/reason_no_insurance.png\
  figures/duration_no_insurance.png\
  figures/duration_no_insurance_by_reason.png\
  figures/forestplot_uninsured_1_year.png

@@ -42,14 +42,17 @@ calculate_proportions <- function(data, strat_var = NULL) {
                HINOTHER.f, HINOMEET.f, HINOWAIT.f, HINOMISS.f, HINOELIG.f),
       names_to = 'reason',
       values_to = 'value') %>%
-    ungroup()
+    ungroup() %>%
+  
+    # Factor by duration for correct ordering
+    factor_hilast()
 }
 
 # Generate line graph of duration without insurance by reason
 plot_reasons_by_dur <- function(data, base_size = 20) {
   ggplot(data = data) +
     geom_line(aes(x = HILAST.f, y = value*100, group = reason, color = reason), linewidth = 1) +
-    theme_minimal(base_size = 20) +
+    theme_light(base_size = 20) +
     labs(x = 'Duration Without Insurance', y = 'Answered Yes (%)') +
     scale_color_manual(
       name = 'Reasons for No Insurance',
@@ -84,7 +87,7 @@ data_citizen <- data_citizen %>%
                             labels = c('Citizen (n=1168)', 'Non-Citizen (n=528)')))
 
 # Generate plot, facet wrapped by citizenship status
-citizen_plt <- plot_reasons_by_dur(data_citizen) +
+plt_citizen <- plot_reasons_by_dur(data_citizen) +
   facet_wrap(~CITIZEN.f)
 
 
@@ -101,7 +104,7 @@ data_race <- data_race %>%
                            labels = c('White/non-Hispanic (n=745)', 'White/Hispanic (n=414)', 'Black (n=199)', 'Other (n=138)')))
 
 # Generate plot and facet wrap by race
-race_plt <- plot_reasons_by_dur(data_race, base_size = 24) +
+plt_race <- plot_reasons_by_dur(data_race, base_size = 24) +
   facet_wrap(~RACETH.f)
 
 
@@ -114,11 +117,11 @@ data_fpl <- calculate_proportions(data, 'POVERTY.f')
 # Add in sample sizes
 data_fpl <- data_fpl %>%
   mutate(POVERTY.f = factor(POVERTY.f,
-                           levels = c('<100% FPL', '100 to <200% FPL', '200 to <400% FPL', '≥400% FPL'),
-                           labels = c('<100% FPL (n=363)', '100 to <200% FPL (n=556)', '200 to <400% FPL (n=584)', '≥400% FPL (n=301)')))
+                           levels = c('<100% FPL', '100 to <150% FPL', '150 to <400% FPL', '≥400% FPL'),
+                           labels = c('<100% FPL (n=363)', '100 to <150% FPL (n=418)', '150 to <400% FPL (n=722)', '≥400% FPL (n=301)')))
 
 # Generate plot and facet wrap by race
-fpl_plt <- plot_reasons_by_dur(data_fpl, base_size = 24) +
+plt_fpl <- plot_reasons_by_dur(data_fpl, base_size = 24) +
   facet_wrap(~POVERTY.f)
 
 
@@ -126,6 +129,6 @@ fpl_plt <- plot_reasons_by_dur(data_fpl, base_size = 24) +
 # Export ----
 #------------#
 ggsave('figures/duration_no_insurance_by_reason.png', plt, height = 6, width = 12, dpi = 600)
-ggsave('figures/duration_no_insurance_by_reason_by_citizen.png', citizen_plt, height = 6, width = 18, dpi = 600)
-ggsave('figures/duration_no_insurance_by_reason_by_race.png', race_plt, height = 12, width = 18, dpi = 600)
-ggsave('figures/duration_no_insurance_by_reason_by_fpl.png', fpl_plt, height = 12, width = 18, dpi = 600)
+ggsave('figures/duration_no_insurance_by_reason_by_citizen.png', plt_citizen, height = 6, width = 18, dpi = 600)
+ggsave('figures/duration_no_insurance_by_reason_by_race.png', plt_race, height = 12, width = 18, dpi = 600)
+ggsave('figures/duration_no_insurance_by_reason_by_fpl.png', plt_fpl, height = 12, width = 18, dpi = 600)

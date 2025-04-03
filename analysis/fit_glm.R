@@ -17,16 +17,6 @@ data <- read_csv('data/no_insurance_filtered.csv', show_col_types = F)
 #----------------------#
 # Data preparation ----
 #----------------------#
-# Create age categories
-data <- data %>%
-  mutate(AGE.f = case_when(
-    AGE >= 18 & AGE <= 24 ~ 'Aged 18-24',
-    AGE >= 25 & AGE <= 34 ~ 'Aged 25-34',
-    AGE >= 35 & AGE <= 44 ~ 'Aged 35-44',
-    AGE >= 45 & AGE <= 54 ~ 'Aged 45-54',
-    AGE >= 55 & AGE <= 64 ~ 'Aged 55-64',
-  ))
-
 # Recode outcome variable as binary duration without insurance
 data <- data %>%
   mutate(
@@ -88,17 +78,12 @@ model_output <- model_output %>%
     variable == 'HINOWAIT.fYes' ~ 'Coverage not yet started',
     variable == 'HINOMISS.fYes' ~ 'Missed deadline',
     variable == 'HINOELIG.fYes' ~ 'Not eligible',
-    variable == 'AGE.fAged 18-24' ~ 'Aged 18-24',
-    variable == 'AGE.fAged 25-34' ~ 'Aged 25-34',
-    variable == 'AGE.fAged 35-44' ~ 'Aged 35-44',
-    variable == 'AGE.fAged 45-54' ~ 'Aged 45-54',
-    variable == 'AGE.fAged 55-64' ~ 'Aged 55-64',
     variable == 'RACETH.fOther' ~ 'Other race',
     variable == 'RACETH.fWhite/Hispanic' ~ 'White/Hispanic',
     variable == 'RACETH.fBlack' ~ 'Black/African American',
     variable == 'POVERTY.f<100% FPL' ~ '<100% FPL',
-    variable == 'POVERTY.f100 to <200% FPL' ~ '100 to <200% FPL',
-    variable == 'POVERTY.f200 to <400% FPL' ~ '200 to <400% FPL',
+    variable == 'POVERTY.f100 to <150% FPL' ~ '100 to <150% FPL',
+    variable == 'POVERTY.f150 to <400% FPL' ~ '150 to <400% FPL',
     variable == 'EDUC.fBachelor\'s degree' ~ 'Bachelor\'s degree',
     variable == 'EDUC.fAssociate\'s degree' ~ 'Associate\'s degree',
     variable == 'EDUC.fGrade 11 or less' ~ 'No high school diploma',

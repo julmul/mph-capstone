@@ -67,8 +67,8 @@ data <- data %>%
     ),
     POVERTY.f = case_when(
       POVERTY %in% 11:13 ~ '<100% FPL',
-      POVERTY %in% 21:24 ~ '100 to <200% FPL',
-      POVERTY %in% 31:34 ~ '200 to <400% FPL',
+      POVERTY %in% 21:23 ~ '100 to <150% FPL',
+      POVERTY %in% 24:34 ~ '150 to <400% FPL',
       POVERTY %in% 35:37 ~ '≥400% FPL'
     )
   )

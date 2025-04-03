@@ -44,7 +44,7 @@ plot_duration <- function(data, base_size) {
   # Generate histogram
   ggplot(data = data) +
     geom_bar(aes(x = HILAST.f, y = prop), stat = 'identity', fill = 'black') +
-    theme_minimal(base_size = base_size) +
+    theme_light(base_size = base_size) +
     theme(legend.position = 'none',
           axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1)) +
     labs(x = 'Duration Without Insurance', y = 'Proportion')
@@ -74,7 +74,7 @@ data_citizen <- data_citizen %>%
                             labels = c('Citizen (n=1168)', 'Non-Citizen (n=528)')))
 
 # Plot duration of no insurance, facet wrapped by citizenship status
-citizen_plt <- plot_duration(data = data_citizen, base_size = 18) +
+plt_citizen <- plot_duration(data = data_citizen, base_size = 18) +
   facet_wrap(~CITIZEN.f)
 
 
@@ -91,7 +91,7 @@ data_race <- data_race %>%
                            labels = c('White/non-Hispanic (n=745)', 'White/Hispanic (n=414)', 'Black (n=199)', 'Other (n=138)')))
 
 # Plot duration of no insurance, facet wrapped by race/ethnicity
-race_plt <- plot_duration(data = data_race, base_size = 24) +
+plt_race <- plot_duration(data = data_race, base_size = 24) +
   facet_wrap(~RACETH.f)
 
 
@@ -99,5 +99,5 @@ race_plt <- plot_duration(data = data_race, base_size = 24) +
 # Export ----
 #------------#
 ggsave('figures/duration_no_insurance.png', plt, height = 6, width = 8)
-ggsave('figures/duration_no_insurance_by_citizen.png', citizen_plt, height = 6, width = 12)
-ggsave('figures/duration_no_insurance_by_race.png', race_plt, height = 12, width = 18)
+ggsave('figures/duration_no_insurance_by_citizen.png', plt_citizen, height = 6, width = 12)
+ggsave('figures/duration_no_insurance_by_race.png', plt_race, height = 12, width = 18)

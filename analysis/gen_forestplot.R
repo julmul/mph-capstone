@@ -29,7 +29,7 @@ plt <- ggplot(data, aes(x = odds_ratio, y = variable, color = category, shape = 
                                 'Reason for Uninsurance' = '#D55E00',
                                 'Socioeconomic Status' = '#F0E442')) +
   scale_shape_manual(values = c('Significant' = 16, 'Not Significant' = 1)) +
-  theme_bw(base_size = 14)
+  theme_light(base_size = 14)
 
 # Export PNG
 ggsave('figures/forestplot_uninsured_1_year.png', plt, height = 7.5, width = 8.5)
