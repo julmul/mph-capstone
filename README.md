@@ -30,26 +30,28 @@ The final capstone report is located in `reports/report.pdf`
 
 These steps should be run in a Unix-based environment (e.g., macOS, Linux, or Windows with WSL). To reproduce the analysis:
 
-1. Clone the repository: 
+1. Ensure prerequisites are installed (`R`, `make`, `biber`, and `pdflatex`).
+
+2. Clone the repository: 
 
 ```
 git clone https://github.com/julmul/mph-capstone.git
 cd mph-capstone
 ```
 
-2. Install necessary R packages:
+3. Install necessary R packages:
 
 ```
 Rscript -e "install.packages(c('tidyverse', 'table1', 'flextable'))"
 ```
 
-3. Remove previously generated figures and datasets:
+4. Remove previously generated figures and datasets in a terminal:
 
 ```
 make clean
 ```
 
-4. Re-run the full analysis in a terminal:
+5. Re-run the full analysis in a terminal:
   
 ```
 make all

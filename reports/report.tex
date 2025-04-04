@@ -18,6 +18,7 @@
 \usepackage{lscape}
 \usepackage[tableposition=top]{caption}
 \usepackage{indentfirst}
+\usepackage{rotating}
 
 % Title page margins
 \newgeometry{top=2in, bottom=1in, left=1.5in, right=1.5in}
@@ -67,7 +68,7 @@
     \vspace*{-3cm}
     \includegraphics[width=0.5\textwidth]{reports/unc-logo.png}\par
     \vspace{0.5cm}
-    {\Huge\bfseries Understanding Gaps in Coverage: Reasons for and Duration of Uninsurance in the United States in 2023 \par}
+    {\Huge\bfseries Understanding Gaps in Health Coverage: Reasons for and Duration of Uninsurance in the United States in 2023 \par}
     \vspace{2cm}
     {\LARGE Julia G. Muller\par}
     {\Large Gillings School of Global Public Health \par}
@@ -163,14 +164,6 @@ Lastly, NHIS lacks data for which U.S. state the respondent resides in. State-le
 \newpage
 \section{Tables and Figures}
 
-% Table 1
-\begin{landscape}
-  \begin{table}[H]
-    \includegraphics[width=22cm]{figures/table_1.png}
-    \caption{Demographic and socioeconomic characteristics of a sample of adults aged 18-64 (overall and according to duration without insurance) without health insurance in the United States in 2023 (n=1,804). All data were derived from the 2023 National Health Interview Survey (NHIS). The study sample included adults aged 18-64 who reported not having insurance at the time of survey, and who provided the duration of time that they have not had insurance.}
-  \end{table}
-\end{landscape}
-
 % Figure 1
 \begin{figure}[H]
   \centering
@@ -212,6 +205,13 @@ Lastly, NHIS lacks data for which U.S. state the respondent resides in. State-le
   \includegraphics[width=18cm]{figures/forestplot_uninsured_1_year.png}
   \caption{Adjusted odds ratios (aOR) and 95\% confidence intervals (CIs) for the duration of uninsurance (less than 1 year vs. 1 year or more) among a sample of U.S. adults aged 18-64 who did not have health insurance at the time of the 2023 National Health Interview Survey (n=1,804). This forest plot presents results from a multivariate logistic regression model. Covariates included in the model were age, race/ethnicity (White/non-Hispanic [ref], White/Hispanic, Black, other race), citizenship status (U.S. citizen [ref], non-U.S. citizen), highest level of education (high school diploma [ref], less than high school diploma, some college, associate’s degree, bachelor’s degree, postgraduate degree), reason for uninsurance (no [ref], yes for each separate reason), and federal poverty level (over 400\% FPL [ref], less than 100\% FPL, 100 to less than 150\% FPL, 150 to less than 400\% FPL). Higher aOR indicates stronger association with being uninsured for 1 year or more. Statistical significance is denoted with a filled circle.}
 \end{figure}
+
+% Table 1
+\begin{sidewaystable}
+  \centering
+  \includegraphics[width=22cm]{figures/table_1.png}
+  \caption{Demographic and socioeconomic characteristics of a sample of adults aged 18–64 (overall and according to duration without insurance) without health insurance in the United States in 2023 (n=1,804). All data were derived from the 2023 National Health Interview Survey (NHIS). The study sample included adults aged 18–64 who reported not having insurance at the time of survey, and who provided the duration of time that they have not had insurance.}
+\end{sidewaystable}
 
 
 %%%%%%%%%%%%%%%%
