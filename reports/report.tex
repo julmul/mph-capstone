@@ -19,6 +19,7 @@
 \usepackage[tableposition=top]{caption}
 \usepackage{indentfirst}
 \usepackage{rotating}
+\usepackage{textcomp}
 
 % Title page margins
 \newgeometry{top=2in, bottom=1in, left=1.5in, right=1.5in}
@@ -65,20 +66,28 @@
 %%%%%%%%%%%%%%%%%
 \begin{titlepage}
     \centering
-    \vspace*{-3cm}
+    \vspace*{-2cm}
     \includegraphics[width=0.5\textwidth]{reports/unc-logo.png}\par
     \vspace{0.5cm}
     {\Huge\bfseries Understanding Gaps in Health Coverage: Reasons for and Duration of Uninsurance in the United States in 2023 \par}
     \vspace{2cm}
     {\LARGE Julia G. Muller\par}
-    {\Large Gillings School of Global Public Health \par}
-    {\Large University of North Carolina at Chapel Hill \par}
-    \vspace{3cm}
-    {\large A final capstone submitted for the Master of Public Health in Applied Epidemiology \par}
     \vspace{1cm}
-    {\large 15 April 2025\par}
+    {\large A Capstone Project submitted to the faculty of the University of North Carolina at Chapel Hill in partial fulfillment of the requirements
+for the degree of Master of Public Health with a Concentration in Applied Epidemiology in the Gillings School of Global Public Health. \par}
     \vspace{1cm}
+    {\large April 2025\par}
 \end{titlepage}
+
+
+\newpage
+\begin{center}
+  \null\vfill
+  \textcopyright{2025 Julia G. Muller}
+
+  ALL RIGHTS RESERVED
+  \vspace{1cm}
+\end{center}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%
@@ -87,6 +96,27 @@
 \newpage
 \documentgeometry
 \tableofcontents
+
+
+%%%%%%%%%%%%%%
+%% ABSTRACT %%
+%%%%%%%%%%%%%%
+\newpage
+\section{Abstract}
+
+\textbf{Background:} Lack of health insurance is known to contribute to increased financial strain, barriers in access to healthcare, and worse overall health outcomes. Various demographic factors—such as age, race, Hispanic ethnicity, income, and education level—play a role in the likelihood of being uninsured and reported reasons for being uninsured. However, little has been done to explore how reasons for uninsurance relate to duration without insurance. Understanding this relationship may help identify populations at risk for prolonged gaps in coverage and inform targeted policy interventions to reduce long-term uninsurance.
+
+\textbf{Research Purpose:} This study aims to address key gaps in knowledge about how specific reasons for uninsurance are related to duration without insurance, and to investigate how these reasons differ by demographic and socioeconomic factors like race, citizenship status, and income.
+
+\textbf{Methods:} A cross-sectional study was conducted on U.S. adults aged 18-64 who did not have health insurance at time of survey (n=1,804). Data were ascertained from the 2023 National Health Interview Survey (NHIS). The primary exposures were self-reported reasons for uninsurance; the outcome was self-reported duration without health insurance. Prevalence of reasons for uninsurance across durations without insurance were reported in frequencies and percentages, stratified by race/ethnicity, citizenship status, and federal poverty level. Chi-square tests were used to compare differences in the distribution of reasons for uninsurance across groups. Multivariate logistic regression was used to estimate adjusted odds ratios and 95\% confidence intervals (CIs) of long-term uninsurance (defined as no insurance for 1 year or more). The model adjusted for potential confounders identified as relevant predictors of insurance status in previous literature, including age, race/ethnicity, U.S. citizenship status, highest level of education, and federal poverty level.
+
+\textbf{Results:} Of the 1,804 uninsured U.S. adults, 28.8\% were uninsured for less than 1 year, 20.2\% for 1 to less than 3 years, 10.5\% for 3 to less than 5 years, 11.2\% for 5 to less than 10 years, 13.7\% for 10 or more years, and 15.6\% reported never having been insured. High cost was the most common reason across all durations, selected by between 50.2\% and 77.7\% of respondents across durations. The second-most common reason varied by group: ineligibility was more frequently reported by non-U.S. citizens and lower income groups, while not wanting or needing insurance was more commonly cited among U.S. citizens and those with higher income. Adjusted analyses showed that high cost (aOR = 2.10, 95\% CI: 1.63-2.72), plans not meeting needs (aOR = 1.39, 95\% CI: 1.01-1.94), and not wanting or needing insurance (aOR = 2.67, 95\% CI: 2.00-3.61) were associated with increased odds of reporting long-term uninsurance (1 year or more).
+
+\textbf{Discussion:} High cost was the most frequently reported barrier to insurance across all durations. However, structural barriers such as ineligibility and difficulty or confusion with enrollment were more prevalent among non-citizens and lower-income groups, and their prevalence increased with longer durations of uninsurance. Notably, a substantial proportion of respondents across demographic and socioeconomic groups also reported not wanting or needing insurance, indicating that personal preferences may play a role in the decision to remain uninsured. This study was limited by the cross-sectional nature of NHIS, preventing causal interpretation of findings. Additionally, this study lacks data on respondents’ state of residence, limiting the ability to account for state-level policy differences in Medicaid expansion and public insurance options.
+
+\textbf{Conclusion:} The patterns of uninsurance identified in this study underscore the importance of improving both accessibility and affordability of health insurance plans. Policy changes should focus on addressing structural barriers, particularly for non-citizens and lower-income individuals, while also considering the autonomy of individuals in making healthcare choices. By addressing these factors, policymakers can work to reduce the duration of uninsurance and ensure that coverage is accessible to those who need it most.
+
+\textbf{Contribution to Public Health Science:} This study advances public health by providing a clearer understanding of the factors contributing to long-term uninsurance, particularly the role of affordability, citizenship status, and income disparities. This research can inform interventions and policies aimed at reducing coverage gaps and improving access to healthcare for underserved populations.
 
 
 %%%%%%%%%%%%%%%%%%
@@ -164,6 +194,13 @@ Lastly, NHIS lacks data for which U.S. state the respondent resides in. State-le
 \newpage
 \section{Tables and Figures}
 
+% Table 1
+\begin{sidewaystable}
+  \centering
+  \includegraphics[width=22cm]{figures/table_1.png}
+  \caption{Demographic and socioeconomic characteristics of a sample of adults aged 18–64 (overall and according to duration without insurance) without health insurance in the United States in 2023 (n=1,804). All data were derived from the 2023 National Health Interview Survey (NHIS). The study sample included adults aged 18–64 who reported not having insurance at the time of survey, and who provided the duration of time that they have not had insurance.}
+\end{sidewaystable}
+
 % Figure 1
 \begin{figure}[H]
   \centering
@@ -206,19 +243,12 @@ Lastly, NHIS lacks data for which U.S. state the respondent resides in. State-le
   \caption{Adjusted odds ratios (aOR) and 95\% confidence intervals (CIs) for the duration of uninsurance (less than 1 year vs. 1 year or more) among a sample of U.S. adults aged 18-64 who did not have health insurance at the time of the 2023 National Health Interview Survey (n=1,804). This forest plot presents results from a multivariate logistic regression model. Covariates included in the model were age, race/ethnicity (White/non-Hispanic [ref], White/Hispanic, Black, other race), citizenship status (U.S. citizen [ref], non-U.S. citizen), highest level of education (high school diploma [ref], less than high school diploma, some college, associate’s degree, bachelor’s degree, postgraduate degree), reason for uninsurance (no [ref], yes for each separate reason), and federal poverty level (over 400\% FPL [ref], less than 100\% FPL, 100 to less than 150\% FPL, 150 to less than 400\% FPL). Higher aOR indicates stronger association with being uninsured for 1 year or more. Statistical significance is denoted with a filled circle.}
 \end{figure}
 
-% Table 1
-\begin{sidewaystable}
-  \centering
-  \includegraphics[width=22cm]{figures/table_1.png}
-  \caption{Demographic and socioeconomic characteristics of a sample of adults aged 18–64 (overall and according to duration without insurance) without health insurance in the United States in 2023 (n=1,804). All data were derived from the 2023 National Health Interview Survey (NHIS). The study sample included adults aged 18–64 who reported not having insurance at the time of survey, and who provided the duration of time that they have not had insurance.}
-\end{sidewaystable}
-
 
 %%%%%%%%%%%%%%%%
 %% REFERENCES %%
 %%%%%%%%%%%%%%%%
 \newpage
-
+\newpage
 \printbibliography
 
 \end{document}
